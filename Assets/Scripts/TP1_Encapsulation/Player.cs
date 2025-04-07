@@ -66,18 +66,6 @@ public class Player : MonoBehaviour {
     public bool IsInvincible { get => isInvincible; set => isInvincible = value; }
     public Transform TransformPlayer { get => transformPlayer; set => transformPlayer = value; }
 
-    /*    public Transform Transform
-{
-get
-{
-this.Transform = transformPlayer;
-}
-set
-{
-transformPlayer;
-}
-}*/
-
     public void GainGold(int amount)
     {
         gold += amount;
@@ -101,5 +89,29 @@ transformPlayer;
     {
         TransformPlayer.Translate(pos * moveSpeed * Time.deltaTime);
     }
+
+
+
+    public void Mouvement()
+    {
+        if (Input.GetKey(KeyCode.W))
+        {
+            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            transform.Translate(Vector3.forward * -moveSpeed * Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
+
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
+        }
+    }
+
 }
 
