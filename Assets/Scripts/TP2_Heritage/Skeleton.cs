@@ -1,44 +1,39 @@
+using System;
 using UnityEngine;
 
 namespace TP2_Heritage
 {
-    public class Skeleton : MonoBehaviour
+    public class Skeleton : Ennemy
     {
-        public int health = 80;
-        public int damage = 15;
-        public float speed = 3f;
-        public float detectionRange = 12f;
-        private Transform player;
-        
-        void Start() {
-            player = GameObject.FindGameObjectWithTag("Player").transform;
+        public Skeleton()
+        {
+            Health = 20;
+            Damage = 6;
+            Speed = 7.5f;
+            DetectionRange = 25;
         }
-        
-        void Update() {
-            if (Vector3.Distance(transform.position, player.position) < detectionRange) {
-                Vector3 direction = (player.position - transform.position).normalized;
-                transform.position += direction * speed * Time.deltaTime;
+
+        [SerializeField] private GameObject FLECHE;
+
+
+
+
+
+
+        protected override void Update()
+        {
+            if (Vector3.Distance(transform.position, Player.position) < DetectionRange && Vector3.Distance(transform.position, Player.position) > 15)
+            {
+                Vector3 direction = (Player.position - transform.position).normalized;
+                transform.position += direction * Speed * Time.deltaTime;
+            }
+            if (Vector3.Distance(transform.position, Player.position) < 15)
+            {
+                Debug.Log("FLECHE !!!!!");
+                GameObject fleche = Instantiate(FLECHE);
+                fleche.GetComponent<Rigidbody>().AddForce(transform.forward * 100);
             }
         }
-        
-        public void TakeDamage(int amount) {
-            health -= amount;
-            if (health <= 0) {
-                Die();
-            }
-        }
-        
-        private void Die() {
-            Destroy(gameObject);
-        }
-        
-        void OnCollisionEnter(Collision collision) {
-            if (collision.gameObject.CompareTag("Player")) {
-                PlayerCharacter player = collision.gameObject.GetComponent<PlayerCharacter>();
-                if (player != null) {
-                    player.TakeDamage(damage);
-                }
-            }
-        }
+
     }
 }
