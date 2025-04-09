@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 
+
     public class PlayerCharacter : MonoBehaviour
     {
         [SerializeField] private string playerName;
@@ -9,8 +10,8 @@ using UnityEngine;
         [SerializeField] private int maxHealth = 100;
         [SerializeField] private float moveSpeed = 5f;
         [SerializeField] private int gold;
-        [SerializeField] private float mana = 100f; 
-        [SerializeField] private float maxMana = 100f; 
+        [SerializeField] private float mana = 100f;
+        [SerializeField] private float maxMana = 100f;
         private bool isInvincible;
 
         // Propriétés encapsulées avec validation
@@ -20,44 +21,44 @@ using UnityEngine;
         public int Health
         {
             get { return health; }
-             set { health = Mathf.Clamp(value, 0, maxHealth); }
+            set { health = Mathf.Clamp(value, 0, maxHealth); }
         }
 
         public int MaxHealth
         {
             get { return maxHealth; }
-             set { maxHealth = Mathf.Max(1, value); }
+            set { maxHealth = Mathf.Max(1, value); }
         }
 
         public float MoveSpeed
         {
             get { return moveSpeed; }
-             set { moveSpeed = Mathf.Clamp(value, 0.5f, 20f); }
+            set { moveSpeed = Mathf.Clamp(value, 0.5f, 20f); }
         }
 
         public int Gold
         {
             get { return gold; }
-             set { gold = Mathf.Max(0, value); }
+            set { gold = Mathf.Max(0, value); }
         }
 
         public bool IsInvincible
         {
             get { return isInvincible; }
-             set { isInvincible = value; }
+            set { isInvincible = value; }
         }
 
-       
+
         public float Mana
         {
             get { return mana; }
-             set { mana = Mathf.Clamp(value, 0, maxMana); }
+            set { mana = Mathf.Clamp(value, 0, maxMana); }
         }
 
         public float MaxMana
         {
             get { return maxMana; }
-             set { maxMana = Mathf.Max(1, value); }
+            set { maxMana = Mathf.Max(1, value); }
         }
 
         private void Start()
@@ -74,12 +75,12 @@ using UnityEngine;
                 Die();
             }
 
-           
 
-           
+
+
             if (Mana < MaxMana)
             {
-                Mana += 0.1f * Time.deltaTime;
+                Mana += 10f * Time.deltaTime;
             }
         }
 
@@ -90,7 +91,7 @@ using UnityEngine;
             if (isInvincible) return;
             if (damage > 0)
                 Health -= damage;
-           
+
         }
 
         public void Heal(int amount)
@@ -115,14 +116,24 @@ using UnityEngine;
             return false;
         }
 
-      
+
         public bool SpendMana(float amount)
         {
-            if (Mana >= amount && amount > 0)
+        if (Mana >= amount && amount > 0)
             {
+            Debug.Log(amount + " mana dépensé");
                 Mana -= amount;
-                return true;
-            }
+            return true;
+        }
+        else if (Mana <= amount && amount > 0)
+        {
+            Debug.Log("PAS ASSER DE MANA KONYAR");
+        }
+        if(amount == 0)
+        {
+            Debug.Log("Pas de mana comsonmer");
+        }
+
             return false;
         }
 
@@ -161,4 +172,6 @@ using UnityEngine;
             // Logique de mort ici
         }
     }
+
+
 
