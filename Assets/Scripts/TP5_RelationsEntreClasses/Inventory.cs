@@ -2,38 +2,41 @@ namespace TP5
 {
     public class Inventory
     {
-        public Item[] items = new Item[20]; // Taille fixe d'inventaire
-        public int itemCount = 0;
+        private Item[] items = new Item[20]; // Taille fixe d'inventaire
+        private int itemCount = 0;
+
+        public Item[] Items { get => items; set => items = value; }
+        public int ItemCount { get => itemCount; set => itemCount = value; }
 
         public void AddItem(Item item)
         {
-            if (itemCount < items.Length)
+            if (ItemCount < Items.Length)
             {
-                items[itemCount] = item;
-                itemCount++;
+                Items[ItemCount] = item;
+                ItemCount++;
             }
         }
 
         public void RemoveItem(int index)
         {
-            if (index >= 0 && index < itemCount)
+            if (index >= 0 && index < ItemCount)
             {
                 // Décaler tous les éléments
-                for (int i = index; i < itemCount - 1; i++)
+                for (int i = index; i < ItemCount - 1; i++)
                 {
-                    items[i] = items[i + 1];
+                    Items[i] = Items[i + 1];
                 }
-                items[itemCount - 1] = null;
-                itemCount--;
+                Items[ItemCount - 1] = null;
+                ItemCount--;
             }
         }
 
         public float GetTotalWeight()
         {
             float totalWeight = 0;
-            for (int i = 0; i < itemCount; i++)
+            for (int i = 0; i < ItemCount; i++)
             {
-                totalWeight += items[i].weight;
+                totalWeight += Items[i].Weight;
             }
             return totalWeight;
         }
